@@ -20,6 +20,8 @@ public class PropertiesConfig {
 
     private static final Logger LOGGER = getLogger(PropertiesConfig.class);
 
+    private static final String PROPERTY_LOG_MSG = "  >> {} = {}";
+
     private final AppArguments arguments;
 
     public PropertiesConfig(@Lazy final AppArguments arguments) {
@@ -43,32 +45,32 @@ public class PropertiesConfig {
                     : "";
 
             final String driverClassNameProp = prefix + "db.driverClassName";
-            final String driverClassName = properties.getProperty(driverClassNameProp);
-            LOGGER.info("  >> {} = {}", driverClassNameProp, driverClassName);
+            final String driverClassName = properties.getProperty(driverClassNameProp, "oracle.jdbc.driver.OracleDriver");
+            LOGGER.info(PROPERTY_LOG_MSG, driverClassNameProp, driverClassName);
 
             final String urlFormatProp = prefix + "db.urlFormat";
-            final String urlFormat = properties.getProperty(urlFormatProp);
-            LOGGER.info("  >> {} = {}", urlFormatProp, urlFormat);
+            final String urlFormat = properties.getProperty(urlFormatProp, "jdbc:oracle:thin:@%s:%s:%s");
+            LOGGER.info(PROPERTY_LOG_MSG, urlFormatProp, urlFormat);
 
             final String hostnameProp = prefix + "db.hostname";
             final String hostname = properties.getProperty(hostnameProp);
-            LOGGER.info("  >> {} = {}", hostnameProp, hostname);
+            LOGGER.info(PROPERTY_LOG_MSG, hostnameProp, hostname);
 
             final String portProp = prefix + "db.port";
             final String port = properties.getProperty(portProp);
-            LOGGER.info("  >> {} = {}", portProp, port);
+            LOGGER.info(PROPERTY_LOG_MSG, portProp, port);
 
             final String sidProp = prefix + "db.sid";
             final String sid = properties.getProperty(sidProp);
-            LOGGER.info("  >> {} = {}", sidProp, sid);
+            LOGGER.info(PROPERTY_LOG_MSG, sidProp, sid);
 
             final String usernameProp = prefix + "db.username";
             final String username = properties.getProperty(usernameProp);
-            LOGGER.info("  >> {} = {}", usernameProp, username);
+            LOGGER.info(PROPERTY_LOG_MSG, usernameProp, username);
 
             final String passwordProp = prefix + "db.password";
             final String password = properties.getProperty(passwordProp);
-            LOGGER.info("  >> {} = {}", passwordProp, password);
+            LOGGER.info(PROPERTY_LOG_MSG, passwordProp, password);
 
 
             final AppProperties appProperties = AppProperties.builder()
