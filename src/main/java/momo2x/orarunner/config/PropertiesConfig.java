@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,11 +22,12 @@ public class PropertiesConfig {
 
     private final AppArguments arguments;
 
-    public PropertiesConfig(final AppArguments arguments) {
+    public PropertiesConfig(@Lazy final AppArguments arguments) {
         this.arguments = arguments;
     }
 
     @Bean
+    @Lazy
     public AppProperties properties() {
         LOGGER.info(">> Loading properties file");
 

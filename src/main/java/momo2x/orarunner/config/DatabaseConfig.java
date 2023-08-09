@@ -3,6 +3,7 @@ package momo2x.orarunner.config;
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 
 import javax.sql.DataSource;
 
@@ -17,11 +18,12 @@ public class DatabaseConfig {
 
     private final AppProperties properties;
 
-    public DatabaseConfig(final AppProperties properties) {
+    public DatabaseConfig(@Lazy final AppProperties properties) {
         this.properties = properties;
     }
 
     @Bean
+    @Lazy
     public DataSource dataSource() {
         LOGGER.info(">> Creating datasource");
 
@@ -38,6 +40,7 @@ public class DatabaseConfig {
     }
 
     @Bean
+    @Lazy
     public ConnectionFactory connectionFactory() {
         LOGGER.info(">> Creating connection factory");
 

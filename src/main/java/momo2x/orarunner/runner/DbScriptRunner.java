@@ -5,6 +5,7 @@ import momo2x.orarunner.config.ConnectionFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.io.FileUrlResource;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Component;
@@ -37,9 +38,9 @@ public class DbScriptRunner {
 
     public DbScriptRunner(
             @Value("${db.strategy:dbstatements}") final String dbStrategy,
-            final DataSource dataSource,
-            final ConnectionFactory connectionFactory,
-            final AppArguments arguments) {
+            @Lazy final DataSource dataSource,
+            @Lazy final ConnectionFactory connectionFactory,
+            @Lazy final AppArguments arguments) {
         this.dbStrategy = dbStrategy;
         this.dataSource = dataSource;
         this.connectionFactory = connectionFactory;
@@ -48,6 +49,8 @@ public class DbScriptRunner {
 
     @PostConstruct
     private void runScripts() {
+        LOGGER.info(">> Preparing to run scripts. Strategy: {}", this.dbStrategy);
+
         if ("dbstatements".equals(this.dbStrategy)) {
             this.runUsingJdbConnectionAndStatements();
 
@@ -84,7 +87,7 @@ public class DbScriptRunner {
 
             conn = this.connectionFactory.createConnection();
 
-            LOGGER.info(">> Connection created");
+            LOGGER.info("<< Connection created");
 
             LOGGER.info(">> Executing SQL statements");
 
@@ -95,7 +98,7 @@ public class DbScriptRunner {
 
                         stmt.execute(sql);
 
-                        LOGGER.info(">> SQL statement executed");
+                        LOGGER.info("<< SQL statement executed");
                     } catch (final SQLException e) {
                         throw new RuntimeException(e);
                     }
@@ -114,7 +117,7 @@ public class DbScriptRunner {
 
                     conn.close();
 
-                    LOGGER.info(">> Connection closed");
+                    LOGGER.info("<< Connection closed");
                 }
             } catch (final SQLException ex) {
                 throw new RuntimeException(ex);

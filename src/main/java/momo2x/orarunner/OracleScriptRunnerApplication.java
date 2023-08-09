@@ -15,11 +15,10 @@ public class OracleScriptRunnerApplication {
                         argument.contains("--app.properties.path=")
                                 || argument.equals("--db.scripts.paths="));
 
+        System.out.println("\nDatabase script runner application parameters:\n");
+
         if (hasNoArgument) {
-            System.out.println("\n"
-                            + "Database script runner application parameters:\n"
-                            + "\n"
-                            + "Mandatory:\n"
+            System.out.println("Mandatory:\n"
                             + "  --app.properties.path : Path to database properties file with database connection.\n"
                             + "  --db.scripts.paths    : Comma separated database script paths.\n"
                             + "\n"
@@ -42,10 +41,15 @@ public class OracleScriptRunnerApplication {
                             + "    java -jar oracle-script-runner \\ \n"
                             + "    --app.properties.path=<path-to-properties-file> \\ \n"
                             + "    --db.scripts.paths=<path-to-script-1>,<path-to-script-2>,<path-to-script-3> \\ \n"
-                            + "    --db.strategy=dbpopulator \\ \n"
+                            + "    --db.strategy=dbpopulator\n"
             );
             System.exit(1);
         }
+
+        Arrays
+                .stream(args)
+                .forEach(System.out::println);
+        System.out.println();
 
         run(OracleScriptRunnerApplication.class, args);
     }

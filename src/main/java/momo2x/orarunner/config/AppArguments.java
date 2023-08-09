@@ -2,6 +2,7 @@ package momo2x.orarunner.config;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -10,6 +11,7 @@ import java.util.List;
 import static org.slf4j.LoggerFactory.getLogger;
 
 @Component
+@Lazy
 public class AppArguments {
 
     private static final Logger LOGGER = getLogger(AppArguments.class);
@@ -23,7 +25,8 @@ public class AppArguments {
             @Value("${db.properties.prefix}") final String dbPropertiesPrefix,
             @Value("${db.scripts.paths}") final String[] dbScriptsPaths
     ) {
-        LOGGER.info(">> Loading properties file");
+        LOGGER.info(">> Loading application arguments");
+
         LOGGER.info("  >> app.properties.path: {}", appPropertiesPath);
         LOGGER.info("  >> db.properties.prefix: {}", dbPropertiesPrefix);
         LOGGER.info("  >> db.scripts.paths: {}", Arrays.toString(dbScriptsPaths));
@@ -31,6 +34,8 @@ public class AppArguments {
         this.appPropertiesPath = appPropertiesPath;
         this.dbPropertiesPrefix = dbPropertiesPrefix;
         this.dbScriptPaths = dbScriptsPaths;
+
+        LOGGER.info("<< Application arguments loaded");
     }
 
     public String getAppPropertiesPath() {
