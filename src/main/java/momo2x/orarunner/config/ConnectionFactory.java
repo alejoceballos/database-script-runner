@@ -1,10 +1,16 @@
 package momo2x.orarunner.config;
 
+import org.slf4j.Logger;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 public class ConnectionFactory {
+
+    private static final Logger LOGGER = getLogger(ConnectionFactory.class);
 
     private final String url;
     private final String username;
@@ -24,8 +30,21 @@ public class ConnectionFactory {
 
     public Connection createConnection() throws SQLException {
         try {
+            LOGGER.info(">> Loading {}", this.driverClassName);
+
             Class.forName(this.driverClassName);
-            return DriverManager.getConnection(this.url, this.username, this.password);
+
+            LOGGER.info("<< {} loaded", this.driverClassName);
+            LOGGER.info(">> Getting connection from driver manager [username: {}, password: {}, url: {}]",
+                    this.username,
+                    this.password,
+                    this.url);
+
+            final Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
+
+            LOGGER.info("<< Connection from driver manager retrieved");
+
+            return connection;
 
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);

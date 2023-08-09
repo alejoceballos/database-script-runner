@@ -56,10 +56,16 @@ public class DatabaseConfig {
     }
 
     private String generateUrl() {
-        return format(
+        LOGGER.info(">> Generating connection URL");
+
+        final String url = format(
                 this.properties.getUrlFormat(),
                 this.properties.getHost(),
                 this.properties.getPort(),
                 this.properties.getSid());
+
+        LOGGER.info("<< Connection URL: {}", url);
+
+        return url;
     }
 }

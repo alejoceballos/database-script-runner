@@ -42,22 +42,43 @@ public class PropertiesConfig {
                     ? this.arguments.getDbPropertiesPrefix() + "."
                     : "";
 
-            final String driverClassName = prefix + "db.driverClassName";
-            final String urlFormat = prefix + "db.urlFormat";
-            final String hostname = prefix + "db.hostname";
-            final String port = prefix + "db.port";
-            final String sid = prefix + "db.sid";
-            final String username = prefix + "db.username";
-            final String password = prefix + "db.password";
+            final String driverClassNameProp = prefix + "db.driverClassName";
+            final String driverClassName = properties.getProperty(driverClassNameProp);
+            LOGGER.info("  >> {} = {}", driverClassNameProp, driverClassName);
+
+            final String urlFormatProp = prefix + "db.urlFormat";
+            final String urlFormat = properties.getProperty(urlFormatProp);
+            LOGGER.info("  >> {} = {}", urlFormatProp, urlFormat);
+
+            final String hostnameProp = prefix + "db.hostname";
+            final String hostname = properties.getProperty(hostnameProp);
+            LOGGER.info("  >> {} = {}", hostnameProp, hostname);
+
+            final String portProp = prefix + "db.port";
+            final String port = properties.getProperty(portProp);
+            LOGGER.info("  >> {} = {}", portProp, port);
+
+            final String sidProp = prefix + "db.sid";
+            final String sid = properties.getProperty(sidProp);
+            LOGGER.info("  >> {} = {}", sidProp, sid);
+
+            final String usernameProp = prefix + "db.username";
+            final String username = properties.getProperty(usernameProp);
+            LOGGER.info("  >> {} = {}", usernameProp, username);
+
+            final String passwordProp = prefix + "db.password";
+            final String password = properties.getProperty(passwordProp);
+            LOGGER.info("  >> {} = {}", passwordProp, password);
+
 
             final AppProperties appProperties = AppProperties.builder()
-                    .driverClassName(properties.getProperty(driverClassName))
-                    .urlFormat(properties.getProperty(urlFormat))
-                    .host(properties.getProperty(hostname))
-                    .port(properties.getProperty(port))
-                    .sid(properties.getProperty(sid))
-                    .username(properties.getProperty(username))
-                    .password(properties.getProperty(password))
+                    .driverClassName(driverClassName)
+                    .urlFormat(urlFormat)
+                    .host(hostname)
+                    .port(port)
+                    .sid(sid)
+                    .username(username)
+                    .password(password)
                     .build();
 
             LOGGER.info("<< Database properties stored");
