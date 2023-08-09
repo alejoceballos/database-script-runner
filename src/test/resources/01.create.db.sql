@@ -1,0 +1,4 @@
+CREATE USER c##testuser IDENTIFIED by test_password
+    DEFAULT TABLESPACE users
+    TEMPORARY TABLESPACE temp
+    QUOTA UNLIMITED ON users;
